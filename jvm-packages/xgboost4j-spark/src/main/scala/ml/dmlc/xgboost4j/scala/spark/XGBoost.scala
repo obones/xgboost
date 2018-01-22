@@ -16,7 +16,7 @@
 
 package ml.dmlc.xgboost4j.scala.spark
 
-import java.nio.File
+import java.io.File
 // import java.nio.file.Files
 
 import scala.collection.mutable
