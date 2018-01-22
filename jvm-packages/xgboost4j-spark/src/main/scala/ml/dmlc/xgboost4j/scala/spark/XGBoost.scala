@@ -124,7 +124,7 @@ object XGBoost extends Serializable {
               s" ${TaskContext.getPartitionId()}")
       }
       val cacheFileName = if (useExternalMemory) {
-        val file = new File.createTempFile(
+        val file = File.createTempFile(
           s"$appName-${TaskContext.get().stageId()}-",
           s"dtrain_cache-${TaskContext.getPartitionId()}")
         file.deleteOnExit()
