@@ -16,6 +16,9 @@
 
 package ml.dmlc.xgboost4j.scala.spark
 
+import java.nio.File
+//import java.nio.file.Files
+
 import scala.collection.mutable
 
 import ml.dmlc.xgboost4j.java.{IRabitTracker, Rabit, XGBoostError, RabitTracker => PyRabitTracker}
@@ -121,8 +124,16 @@ object XGBoost extends Serializable {
               s" ${TaskContext.getPartitionId()}")
       }
       val cacheFileName = if (useExternalMemory) {
-        s"$appName-${TaskContext.get().stageId()}-" +
-            s"dtrain_cache-${TaskContext.getPartitionId()}"
+        /*val dir = Files.createTempDirectory(s"${TaskContext.get().stageId()}-cache-$taskId")
+        new File(dir.toUri).deleteOnExit()
+        dir.toAbsolutePath.toString*/
+        
+        val file = new File.createTempFile(s"$appName-${TaskContext.get().stageId()}-", s"dtrain_cache-${TaskContext.getPartitionId()}")
+        file.deleteOnExit()
+        file.getAbsolutePath()
+        
+        /*s"$appName-${TaskContext.get().stageId()}-" +
+            s"dtrain_cache-${TaskContext.getPartitionId()}"*/
       } else {
         null
       }
